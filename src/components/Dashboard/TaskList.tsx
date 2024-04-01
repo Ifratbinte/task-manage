@@ -8,9 +8,10 @@ import Button from '../common/Button';
 
 interface Props {
   tasks: Task[];
+  addTaskHandler: () => void;
 }
 
-const TasksList: React.FC<Props> = ({ tasks }) => {
+const TasksList: React.FC<Props> = ({ tasks , addTaskHandler}) => {
   const dispatch = useDispatch();
 
   // task completion handler
@@ -29,7 +30,7 @@ const TasksList: React.FC<Props> = ({ tasks }) => {
       {/* Task list Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold mb-4">Task List</h2>
-        <Button buttonIcon={<FaPlus/>} buttonText='Add Task'/>
+        <Button buttonIcon={<FaPlus/>} buttonText='Add Task' onClick={addTaskHandler}/>
       </div>
 
       {/* Task list Table */}
