@@ -18,7 +18,8 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <div className="dark:bg-dark dark:text-darkSlate">
-          {loading ? <Loader /> : children}
+          {children}
+          {/* {loading ? <Loader /> : children} */}
         </div>
       </body>
     </html>

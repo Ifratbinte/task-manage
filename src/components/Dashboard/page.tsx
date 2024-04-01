@@ -1,11 +1,11 @@
-"use client";
-import React from "react";
+'use client'
+import TasksList from "./TaskList";
+import tasks from "./task-mock-data"
 
-
-const ECommerce: React.FC = () => {
+export default function Home() {
   return (
-    <>Task List</>
+    <div className="py-3">
+        <TasksList tasks={tasks}/>
+    </div>
   );
-};
-
-export default ECommerce;
+}
