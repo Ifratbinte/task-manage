@@ -3,27 +3,36 @@ import React, { useState } from 'react';
 import { Task } from '@/types/task';
 import { useDispatch } from 'react-redux';
 import { addTask, toggleTaskCompletion, deleteTask } from '@/lib/task/taskSlice';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaPlus, FaTrashAlt } from 'react-icons/fa';
+import Button from '../common/Button';
 
 interface Props {
   tasks: Task[];
 }
 
 const TasksList: React.FC<Props> = ({ tasks }) => {
-
   const dispatch = useDispatch();
 
+  // task completion handler
   const handleToggleCompletion = () => {
     dispatch(toggleTaskCompletion(tasks.id));
   };
 
+  // task delete handler
   const handleDelete = () => {
     dispatch(deleteTask(tasks.id));
   };
   
   return (
     <div className="bg-gray-100 p-4">
-      <h2 className="text-xl font-semibold mb-4">Task List</h2>
+
+      {/* Task list Header */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-semibold mb-4">Task List</h2>
+        <Button buttonIcon={<FaPlus/>} buttonText='Add Task'/>
+      </div>
+
+      {/* Task list Table */}
       <table className="border-collapse table-auto w-full text-sm">
         <thead className='dark:bg-meta'>
           <tr className='border-b dark:border-slate-600 font-medium p-4 text-slate-700 dark:text-slate-200 text-left text-base'>
@@ -34,9 +43,9 @@ const TasksList: React.FC<Props> = ({ tasks }) => {
           </tr>
         </thead>
         <tbody className='bg-white dark:bg-slate-800'>
+          {/* task list container start */}
           {tasks.map((task) => (
             <tr key={task.title} className='border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400 text-base'>
-              
               <td className="pl-8 py-3 flex items-center gap-3">
                 <input
                   type="checkbox"
@@ -54,6 +63,7 @@ const TasksList: React.FC<Props> = ({ tasks }) => {
               </td>
             </tr>
           ))}
+          {/* task list container end */}
         </tbody>
       </table>
     </div>
