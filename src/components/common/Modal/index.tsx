@@ -1,5 +1,6 @@
+import TaskForm from "@/components/Dashboard/TaskForm";
 import React, { useEffect, useRef, useState } from "react";
-import { FaTimes } from "react-icons/fa";
+import { LiaTimesSolid } from "react-icons/lia";
 
 interface ModalProps {
     isOpen: boolean;
@@ -39,16 +40,15 @@ interface ModalProps {
         {/* Modal content */}
         <div className="modal-body">
           <div className="p-6 bg-slate-100 rounded-lg shadow-lg">
-            <div className="flex items-center justify-between mb-4">
-              <h1 className="text-lg font-semibold">Modal Title</h1>
+            <div className="flex items-center justify-end">
               <button
                 onClick={onClose}
                 className="text-gray-500 hover:text-gray-700 focus:outline-none"
               >
-               <FaTimes/>
+                <LiaTimesSolid className="h-7 w-7 p-1.5 rounded-full hover:bg-slate-200"/>
               </button>
             </div>
-            <p>Modal content goes here.</p>
+            <TaskForm/>
           </div>
         </div>
       </div>
