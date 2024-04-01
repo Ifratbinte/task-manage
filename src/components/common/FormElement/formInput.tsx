@@ -9,8 +9,9 @@ interface FormInputProps{
 const FormInput:React.FC<FormInputProps> = ({label, type, placeholder}) => {
   return (
     <>
-        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+        <label className="mb-3 flex gap-[2px] text-sm font-medium text-black dark:text-white">
             {label}
+            <span className='text-red-500'>*</span>
         </label>
         <input
             type={type}

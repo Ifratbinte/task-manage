@@ -23,8 +23,9 @@ const DatePicker:React.FC<DatePickerProps> = ({label}) => {
 
   return (
     <>
-      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+      <label className="mb-3 flex gap-[2px] text-sm font-medium text-black dark:text-white">
         {label}
+        <span className='text-red-500'>*</span>
       </label>
       <div className="relative w-full border-[1.5px] border-stroke">
         <input
