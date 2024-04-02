@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import { MdOutlineDateRange } from "react-icons/md";
 
 interface DatePickerProps{
-    label: string
+    label: string,
+    register: any,
+    name:string
 }
 
-const DatePicker:React.FC<DatePickerProps> = ({label}) => {
+const DatePicker:React.FC<DatePickerProps> = ({label, register, name}) => {
   useEffect(() => {
     // Init flatpickr
     flatpickr(".form-datepicker", {
@@ -32,6 +34,7 @@ const DatePicker:React.FC<DatePickerProps> = ({label}) => {
           className="form-datepicker rounded  bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
           placeholder="mm/dd/yyyy"
           data-class="flatpickr-right"
+          {...register(name, { required:true })}
         />
 
         <div className="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">

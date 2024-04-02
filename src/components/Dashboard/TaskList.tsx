@@ -6,16 +6,18 @@ import { addTask, toggleTaskCompletion, deleteTask } from '@/lib/task/taskSlice'
 import { FaPlus, FaTrashAlt } from 'react-icons/fa';
 import Button from '../common/Button';
 import FormSelectStatus from '../common/FormElement/FormSelectStatus';
+import { RootState } from '@/lib/store';
+// import { RootState } from '@reduxjs/toolkit/query';
 
 interface Props {
-  tasks: Task[];
+  // tasks: Task[];
   addTaskHandler: () => void;
 }
 
-const TasksList: React.FC<Props> = ({tasks,  addTaskHandler}) => {
+const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
  
   const dispatch = useDispatch();
-  // const { tasks } = useSelector((state: any) => state.tasks);
+  const {tasks}  = useSelector((state: RootState) => state.task);
 
   // task completion handler
   const handleToggleCompletion = () => {
@@ -45,11 +47,11 @@ const TasksList: React.FC<Props> = ({tasks,  addTaskHandler}) => {
       <div className="overflow-x-auto lg:overflow-x-hidden">
         <table className="border-collapse table-auto w-full text-sm">
           <thead className='dark:bg-meta'>
-            <tr className='border-b dark:border-slate-600 font-medium p-4 text-slate-700 dark:text-slate-200 text-left text-base'>
-              <th className='pl-8 py-3'>Title</th>
-              <th className='px-8 pb-y'>Description</th>
-              <th className='pr-8 pb-y'>Status</th>
-              <th className='pr-8 pb-y'>Due Date</th>
+            <tr className='border-b border-slate-300 dark:border-slate-600 font-medium p-4 text-slate-700 dark:text-slate-200 text-left text-base'>
+              <th className='pl-8 py-2'>Title</th>
+              <th className='px-8 pb-2'>Description</th>
+              <th className='pr-8 pb-2'>Status</th>
+              <th className='pr-8 pb-2'>Due Date</th>
               <th className='pr-8 text-center'>Action</th>
             </tr>
           </thead>

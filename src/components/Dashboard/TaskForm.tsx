@@ -3,10 +3,11 @@ import FormInput from '../common/FormElement/formInput'
 import FormTextarea from '../common/FormElement/formTextarea'
 import DatePicker from '../common/FormElement/DatePicker'
 import { useForm } from 'react-hook-form';
-import { space } from 'postcss/lib/list';
 import Button from '../common/Button';
 import { useDispatch } from 'react-redux';
 import { addTask } from '@/lib/task/taskSlice';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup"
 
 interface TaskFormData {
   title: string;
@@ -18,13 +19,23 @@ interface TaskFormProps {
 }
 
 const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
+
+  const schema = yup.object().shape({
+    title: yup.string().required(),
+    dueDate: yup.date().required(),
+    description: yup.string().required(),
+  });
+
   const { 
     register, 
     handleSubmit, 
-    formState: { errors } 
-  } = useForm<TaskFormData>();
+    formState: { errors },
+    getValues,
+  } = useForm<TaskFormData>({mode: "all" , resolver: yupResolver<any>(schema)});
   const dispatch = useDispatch();
 
+  console.log("bdsf", getValues());
+  
   // onSubmit handler for task create
   const onSubmit = (data: TaskFormData) => {
     console.log(data);
@@ -46,14 +57,16 @@ const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
                 label='Task Title' 
                 placeholder='Enter task title' 
                 type='text'
-                {...register('title', { required: true })}
+                register={register}
+                name= "title"
             />
             {errors.title && <span className="text-red-500 text-sm">Title is required</span>}
           </div>
           <div className="w-full xl:w-1/2">
             <DatePicker 
                 label='Due Date'
-                {...register("dueDate", { required:true })}
+                register={register}
+                name='dueDate'
             />
             {errors.dueDate && <span className="text-red-500 text-sm">Due Date is required</span>}
           </div>
@@ -63,7 +76,8 @@ const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
               label='Task Description' 
               placeholder='Write task description' 
               row={6}
-              {...register('description', { required:true })}
+              register={register}
+              name='description'
            />
            {errors.description && <span className='text-red-500 text-sm'>Description is required</span> }
         </div>
