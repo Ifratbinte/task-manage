@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addTask, toggleTaskCompletion, deleteTask } from '@/lib/task/taskSlice';
 import { FaPlus, FaTrashAlt } from 'react-icons/fa';
 import Button from '../common/Button';
-import { RootState } from '@reduxjs/toolkit/query';
+import FormSelectStatus from '../common/FormElement/FormSelectStatus';
 
 interface Props {
   tasks: Task[];
@@ -33,7 +33,12 @@ const TasksList: React.FC<Props> = ({tasks,  addTaskHandler}) => {
       {/* Task list Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold mb-4">Task List</h2>
-        <Button buttonIcon={<FaPlus/>} buttonText='Add Task' onClick={addTaskHandler}/>
+        <div className="flex items-center gap-6">
+          {/* Filter task */}
+          <FormSelectStatus/>
+          {/* Add task */}
+          <Button buttonIcon={<FaPlus/>} buttonText='Add Task' onClick={addTaskHandler}/>
+        </div>
       </div>
 
       {/* Task list Table */}
@@ -44,7 +49,7 @@ const TasksList: React.FC<Props> = ({tasks,  addTaskHandler}) => {
             <th className='px-8 pb-y'>Description</th>
             <th className='pr-8 pb-y'>Status</th>
             <th className='pr-8 pb-y'>Due Date</th>
-            <th className='text-center'>Action</th>
+            <th className='pr-8 text-center'>Action</th>
           </tr>
         </thead>
         <tbody className='bg-white dark:bg-slate-800'>
@@ -62,14 +67,12 @@ const TasksList: React.FC<Props> = ({tasks,  addTaskHandler}) => {
               <td className='px-8 py-3'>{task.description}</td>
               <td className="pr-8 py-3">{task.status}</td>
               <td className="pr-8 py-3">{task.dueDate.toDateString()}</td>
-              <td className='text-center'>
+              <td className='pr-8 text-center'>
                 <button onClick={handleDelete} className="text-red-400 hover:text-red-600">
                   <FaTrashAlt/>
                 </button>
               </td>
-              
             </tr>
-            
           ))}
           {/* task list container end */}
         </tbody>
