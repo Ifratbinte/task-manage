@@ -19,14 +19,16 @@ const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
   const dispatch = useDispatch();
   const {tasks}  = useSelector((state: RootState) => state.task);
 
+  console.log("tasks", tasks);
+  
   // task completion handler
   const handleToggleCompletion = () => {
     dispatch(toggleTaskCompletion(tasks));
   };
 
   // task delete handler
-  const handleDelete = () => {
-    dispatch(deleteTask(tasks));
+  const handleDelete = (id:number) => {
+    dispatch(deleteTask(id));
   };
   
   return (
@@ -69,9 +71,9 @@ const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
                 </td>
                 <td className='px-8 py-3'>{task.description}</td>
                 <td className="pr-8 py-3">{task.status}</td>
-                <td className="pr-8 py-3">{task.dueDate.toDateString()}</td>
+                <td className="pr-8 py-3">{new Date(task?.dueDate).toDateString()}</td>
                 <td className='pr-8 text-center'>
-                  <button onClick={handleDelete} className="text-red-400 hover:text-red-600">
+                  <button onClick={()=> handleDelete(task.id)} className="text-red-400 hover:text-red-600">
                     <FaTrashAlt/>
                   </button>
                 </td>

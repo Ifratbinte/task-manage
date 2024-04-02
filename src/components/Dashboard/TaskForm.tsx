@@ -35,7 +35,7 @@ const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
   const dispatch = useDispatch();
 
   console.log("bdsf", getValues());
-  
+
   // onSubmit handler for task create
   const onSubmit = (data: TaskFormData) => {
     console.log(data);
