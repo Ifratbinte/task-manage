@@ -42,6 +42,7 @@ const TasksList: React.FC<Props> = ({tasks,  addTaskHandler}) => {
           <tr className='border-b dark:border-slate-600 font-medium p-4 text-slate-700 dark:text-slate-200 text-left text-base'>
             <th className='pl-8 py-3'>Title</th>
             <th className='px-8 pb-y'>Description</th>
+            <th className='pr-8 pb-y'>Status</th>
             <th className='pr-8 pb-y'>Due Date</th>
             <th className='text-center'>Action</th>
           </tr>
@@ -59,6 +60,7 @@ const TasksList: React.FC<Props> = ({tasks,  addTaskHandler}) => {
                 {task.title}
               </td>
               <td className='px-8 py-3'>{task.description}</td>
+              <td className="pr-8 py-3">{task.status}</td>
               <td className="pr-8 py-3">{task.dueDate.toDateString()}</td>
               <td className='text-center'>
                 <button onClick={handleDelete} className="text-red-400 hover:text-red-600">
