@@ -1,28 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import FormInput from '../common/FormElement/formInput'
 import FormTextarea from '../common/FormElement/formTextarea'
 import DatePicker from '../common/FormElement/DatePicker'
 import { useForm } from 'react-hook-form';
 import { space } from 'postcss/lib/list';
 import Button from '../common/Button';
+import { useDispatch } from 'react-redux';
+import { addTask } from '@/lib/task/taskSlice';
 
 interface TaskFormData {
   title: string;
   description: string;
   dueDate: string;
 }
+interface TaskFormProps {
+  onAddTask:  any;
+}
 
-const TaskForm = () => {
+const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
   const { 
     register, 
     handleSubmit, 
     formState: { errors } 
   } = useForm<TaskFormData>();
+  const dispatch = useDispatch();
 
+  // onSubmit handler for task create
   const onSubmit = (data: TaskFormData) => {
     console.log(data);
+    dispatch(
+      addTask({
+        id: Math.floor(Math.random() * 1000), // Generate random ID
+        title: data.title,
+        description: data.description,
+        dueDate: new Date(data.dueDate),
+      })
+    );
   };
-  
+
   return (
     <form action="#" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
@@ -33,14 +48,14 @@ const TaskForm = () => {
                 type='text'
                 {...register('title', { required: true })}
             />
-            {errors.title && <span className="text-red-500">Title is required</span>}
+            {errors.title && <span className="text-red-500 text-sm">Title is required</span>}
           </div>
           <div className="w-full xl:w-1/2">
             <DatePicker 
                 label='Due Date'
                 {...register("dueDate", { required:true })}
             />
-            {errors.dueDate && <span className="text-red-500">Due Date is required</span>}
+            {errors.dueDate && <span className="text-red-500 text-sm">Due Date is required</span>}
           </div>
         </div>
         <div className="mb-4.5">
@@ -50,7 +65,7 @@ const TaskForm = () => {
               row={6}
               {...register('description', { required:true })}
            />
-           {errors.description && <span className='text-red-500'>Description is required</span> }
+           {errors.description && <span className='text-red-500 text-sm'>Description is required</span> }
         </div>
         <Button type="Submit" buttonText='Create Task'/>
     </form>

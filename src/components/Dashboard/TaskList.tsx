@@ -1,27 +1,30 @@
 'use client'
 import React, { useState } from 'react';
 import { Task } from '@/types/task';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTask, toggleTaskCompletion, deleteTask } from '@/lib/task/taskSlice';
 import { FaPlus, FaTrashAlt } from 'react-icons/fa';
 import Button from '../common/Button';
+import { RootState } from '@reduxjs/toolkit/query';
 
 interface Props {
   tasks: Task[];
   addTaskHandler: () => void;
 }
 
-const TasksList: React.FC<Props> = ({ tasks , addTaskHandler}) => {
+const TasksList: React.FC<Props> = ({tasks,  addTaskHandler}) => {
+ 
   const dispatch = useDispatch();
+  // const { tasks } = useSelector((state: any) => state.tasks);
 
   // task completion handler
   const handleToggleCompletion = () => {
-    dispatch(toggleTaskCompletion(tasks.id));
+    dispatch(toggleTaskCompletion(tasks));
   };
 
   // task delete handler
   const handleDelete = () => {
-    dispatch(deleteTask(tasks.id));
+    dispatch(deleteTask(tasks));
   };
   
   return (
@@ -45,7 +48,7 @@ const TasksList: React.FC<Props> = ({ tasks , addTaskHandler}) => {
         </thead>
         <tbody className='bg-white dark:bg-slate-800'>
           {/* task list container start */}
-          {tasks.map((task) => (
+          {tasks.map((task:any) => (
             <tr key={task.title} className='border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400 text-base'>
               <td className="pl-8 py-3 flex items-center gap-3">
                 <input
@@ -62,7 +65,9 @@ const TasksList: React.FC<Props> = ({ tasks , addTaskHandler}) => {
                   <FaTrashAlt/>
                 </button>
               </td>
+              
             </tr>
+            
           ))}
           {/* task list container end */}
         </tbody>
