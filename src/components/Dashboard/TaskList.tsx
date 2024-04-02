@@ -10,7 +10,6 @@ import { RootState } from '@/lib/store';
 // import { RootState } from '@reduxjs/toolkit/query';
 
 interface Props {
-  // tasks: Task[];
   addTaskHandler: () => void;
 }
 
@@ -22,8 +21,8 @@ const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
   console.log("tasks", tasks);
   
   // task completion handler
-  const handleToggleCompletion = () => {
-    dispatch(toggleTaskCompletion(tasks));
+  const handleToggleCompletion = (id:number) => {
+    dispatch(toggleTaskCompletion(id));
   };
 
   // task delete handler
@@ -60,14 +59,15 @@ const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
           <tbody className='bg-white dark:bg-slate-800'>
             {/* task list container start */}
             {tasks.map((task:any) => (
-              <tr key={task.title} className='border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400 text-base'>
+              <tr key={task.title} className='border-b border-slate-100 cursor-pointer dark:border-slate-700 text-slate-500 dark:text-slate-400 text-base' >
+                
                 <td className="pl-8 py-3 flex items-center gap-3">
                   <input
                     type="checkbox"
                     checked={task.completed}
-                    onChange={handleToggleCompletion}
+                    onChange={() => handleToggleCompletion(task.id)}
                   />
-                  {task.title}
+                  <span className={`${task.completed ? "text-green-400" : ""}`}>{task.title}</span>
                 </td>
                 <td className='px-8 py-3'>{task.description}</td>
                 <td className="pr-8 py-3">{task.status}</td>

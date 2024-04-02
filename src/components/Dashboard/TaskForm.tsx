@@ -34,7 +34,7 @@ const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
   } = useForm<TaskFormData>({mode: "all" , resolver: yupResolver<any>(schema)});
   const dispatch = useDispatch();
 
-  console.log("bdsf", getValues());
+  console.log("get values", getValues());
 
   // onSubmit handler for task create
   const onSubmit = (data: TaskFormData) => {
