@@ -7,7 +7,6 @@ import { FaPlus, FaTrashAlt } from 'react-icons/fa';
 import Button from '../common/Button';
 import FormSelectStatus from '../common/FormElement/FormSelectStatus';
 import { RootState } from '@/lib/store';
-// import { RootState } from '@reduxjs/toolkit/query';
 
 interface Props {
   addTaskHandler: () => void;
@@ -51,7 +50,7 @@ const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
             <tr className='border-b border-slate-300 dark:border-slate-600 font-medium p-4 text-slate-700 dark:text-slate-200 text-left text-base'>
               <th className='pl-8 py-2'>Title</th>
               <th className='px-8 pb-2'>Description</th>
-              <th className='pr-8 pb-2'>Status</th>
+              {/* <th className='pr-8 pb-2'>Status</th> */}
               <th className='pr-8 pb-2'>Due Date</th>
               <th className='pr-8 text-center'>Action</th>
             </tr>
@@ -67,10 +66,10 @@ const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
                     checked={task.completed}
                     onChange={() => handleToggleCompletion(task.id)}
                   />
-                  <span className={`${task.completed ? "text-green-400" : ""}`}>{task.title}</span>
+                  <span className={`${task.completed ? "line-through" : ""} font-semibold`} onClick={addTaskHandler}>{task.title}</span>
                 </td>
                 <td className='px-8 py-3'>{task.description}</td>
-                <td className="pr-8 py-3">{task.status}</td>
+                {/* <td className="pr-8 py-3">{task.status}</td> */}
                 <td className="pr-8 py-3">{new Date(task?.dueDate).toDateString()}</td>
                 <td className='pr-8 text-center'>
                   <button onClick={()=> handleDelete(task.id)} className="text-red-400 hover:text-red-600">

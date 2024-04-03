@@ -14,11 +14,8 @@ interface TaskFormData {
   description: string;
   dueDate: string;
 }
-interface TaskFormProps {
-  onAddTask:  any;
-}
 
-const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
+const TaskForm = () => {
 
   const schema = yup.object().shape({
     title: yup.string().required(),
@@ -31,6 +28,7 @@ const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
     handleSubmit, 
     formState: { errors },
     getValues,
+    setValue,
   } = useForm<TaskFormData>({mode: "all" , resolver: yupResolver<any>(schema)});
   const dispatch = useDispatch();
 
@@ -45,7 +43,13 @@ const TaskForm:React.FC<TaskFormProps> = ({onAddTask}) => {
         title: data.title,
         description: data.description,
         dueDate: new Date(data.dueDate),
-      })
+      }),
+      // updateTask({
+      //   id: Math.floor(Math.random() * 1000), // Generate random ID
+      //   title: data.title,
+      //   description: data.description,
+      //   dueDate: new Date(data.dueDate),
+      // })
     );
   };
 

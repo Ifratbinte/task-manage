@@ -17,7 +17,8 @@ const TaskSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action) => {
-      state.tasks.push(action.payload)
+      state.tasks.push(action.payload);
+      toast.success("Task create successfully!");
     },
     toggleTaskCompletion: (state, action) => {
       const taskId = action.payload;
@@ -28,6 +29,7 @@ const TaskSlice = createSlice({
     },
     deleteTask: (state, action) => {
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+      toast.success("Task remove successfully!");
     },
   },
 });

@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react";
 import TasksList from "./TaskList";
-import tasks from "./task-mock-data"
 import Modal from "../common//Modal/index"
 
 export default function Home() {
@@ -16,9 +15,10 @@ export default function Home() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <div className="py-3">
-        <TasksList tasks={tasks} addTaskHandler={openModal}/>
+        <TasksList addTaskHandler={openModal}/>
         <Modal isOpen={isModalOpen} onClose={closeModal}/>
     </div>
   );
