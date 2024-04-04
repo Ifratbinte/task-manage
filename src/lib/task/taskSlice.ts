@@ -31,9 +31,21 @@ const TaskSlice = createSlice({
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
       toast.success("Task remove successfully!");
     },
+    updateTask: (state, action: PayloadAction<Task>) => {
+      const idx = state.tasks.findIndex(
+        (task) => task.id === action.payload.id,
+      );
+      console.log({ idx });
+
+      if (idx !== -1) {
+        state.tasks[idx].title = action.payload.title;
+        state.tasks[idx].description = action.payload.description;
+        state.tasks[idx].dueDate = action.payload.dueDate;
+      }
+    },
   },
 });
 
-export const { addTask, toggleTaskCompletion, deleteTask } =
+export const { addTask, toggleTaskCompletion, deleteTask, updateTask } =
   TaskSlice.actions;
 export default TaskSlice.reducer;
