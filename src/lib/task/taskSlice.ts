@@ -28,6 +28,7 @@ const TaskSlice = createSlice({
       if(task) {
         task.completed = !task.completed
       }
+      toast.success("Task completed successfully!");
     },
     deleteTask: (state, action) => {
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
