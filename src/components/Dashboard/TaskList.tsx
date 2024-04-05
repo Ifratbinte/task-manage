@@ -10,9 +10,10 @@ import { RootState } from '@/lib/store';
 
 interface Props {
   addTaskHandler: () => void;
+  handleEdit: (data: Task) => void;
 }
 
-const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
+const TasksList: React.FC<Props> = ({ addTaskHandler, handleEdit}) => {
  
   const dispatch = useDispatch();
   const {tasks}  = useSelector((state: RootState) => state.task);
@@ -66,11 +67,11 @@ const TasksList: React.FC<Props> = ({ addTaskHandler}) => {
                     checked={task.completed}
                     onChange={() => handleToggleCompletion(task.id)}
                   />
-                  <span className={`${task.completed ? "line-through" : ""} font-semibold`} onClick={addTaskHandler}>{task.title}</span>
+                  <span className={`${task.completed ? "line-through" : ""} font-semibold`} onClick={() => handleEdit(task)}>{task.title}</span>
                 </td>
-                <td className='px-8 py-3'>{task.description}</td>
+                <td className='px-8 py-3' onClick={() => handleEdit(task)}>{task.description}</td>
                 {/* <td className="pr-8 py-3">{task.status}</td> */}
-                <td className="pr-8 py-3">{new Date(task?.dueDate).toDateString()}</td>
+                <td className="pr-8 py-3" onClick={() => handleEdit(task)}>{new Date(task?.dueDate).toDateString()}</td>
                 <td className='pr-8 text-center'>
                   <button onClick={()=> handleDelete(task.id)} className="text-red-400 hover:text-red-600">
                     <FaTrashAlt/>

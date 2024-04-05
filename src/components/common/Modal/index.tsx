@@ -1,13 +1,15 @@
 import TaskForm from "@/components/Dashboard/TaskForm";
+import { Task } from "@/types/task";
 import React, { useEffect, useRef, useState } from "react";
 import { LiaTimesSolid } from "react-icons/lia";
 
 interface ModalProps {
+    data: Task | null;
     isOpen: boolean;
     onClose: () => void;
   }
 
-  const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+  const Modal: React.FC<ModalProps> = ({data, isOpen, onClose }) => {
 
     // Modal close when outside click start
     const modalRef = useRef<HTMLDivElement>(null);
@@ -48,7 +50,7 @@ interface ModalProps {
                 <LiaTimesSolid className="h-7 w-7 p-1.5 rounded-full hover:bg-slate-200"/>
               </button>
             </div>
-            <TaskForm/>
+            <TaskForm handleClose={onClose} editData={data} />
           </div>
         </div>
       </div>

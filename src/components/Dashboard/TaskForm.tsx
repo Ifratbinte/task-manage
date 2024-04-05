@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormInput from '../common/FormElement/formInput'
 import FormTextarea from '../common/FormElement/formTextarea'
 import DatePicker from '../common/FormElement/DatePicker'
 import { useForm } from 'react-hook-form';
 import Button from '../common/Button';
 import { useDispatch } from 'react-redux';
-import { addTask } from '@/lib/task/taskSlice';
+import { addTask, updateTask } from '@/lib/task/taskSlice';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup"
+import { Task } from '@/types/task';
 
 interface TaskFormData {
   title: string;
@@ -15,7 +16,13 @@ interface TaskFormData {
   dueDate: string;
 }
 
-const TaskForm = () => {
+const TaskForm = ({
+    handleClose,
+    editData,
+  }: {
+    handleClose: () => void;
+    editData?: Task | null;
+}) => {
 
   const schema = yup.object().shape({
     title: yup.string().required(),
@@ -37,21 +44,35 @@ const TaskForm = () => {
   // onSubmit handler for task create
   const onSubmit = (data: TaskFormData) => {
     console.log(data);
-    dispatch(
-      addTask({
-        id: Math.floor(Math.random() * 1000), // Generate random ID
-        title: data.title,
-        description: data.description,
-        dueDate: new Date(data.dueDate),
-      }),
-      // updateTask({
-      //   id: Math.floor(Math.random() * 1000), // Generate random ID
-      //   title: data.title,
-      //   description: data.description,
-      //   dueDate: new Date(data.dueDate),
-      // })
-    );
+    if (editData?.id) {
+      dispatch(
+        updateTask({
+          id: editData.id,
+          title: data.title,
+          description: data.description,
+          dueDate: new Date(data.dueDate),
+        }),
+      );
+      } else {
+      dispatch(
+        addTask({
+          id: Math.floor(Math.random() * 1000), // Generate random ID
+          title: data.title,
+          description: data.description,
+          dueDate: new Date(data.dueDate),
+        }),
+      );
+    }
+    handleClose();
   };
+
+  useEffect(() => {
+    if (!editData?.id) return;
+    setValue("title", editData.title);
+    editData.dueDate &&
+      setValue("dueDate", new Date(editData.dueDate)?.toDateString());
+    setValue("description", editData.description);
+  }, [editData]);
 
   return (
     <form action="#" onSubmit={handleSubmit(onSubmit)}>
@@ -85,7 +106,10 @@ const TaskForm = () => {
            />
            {errors.description && <span className='text-red-500 text-sm'>Description is required</span> }
         </div>
-        <Button type="Submit" buttonText='Create Task'/>
+        <Button
+          type="Submit"
+          buttonText={editData?.id ? "Update Task" : "Create Task"}
+        />
     </form>
   )
 }
