@@ -44,6 +44,7 @@ const TaskSlice = createSlice({
         state.tasks[idx].description = action.payload.description;
         state.tasks[idx].dueDate = action.payload.dueDate;
       }
+      toast.success("Task updated successfully!");
     },
     setFilter: (state, action: PayloadAction<string>) => {
       state.filter = action.payload;

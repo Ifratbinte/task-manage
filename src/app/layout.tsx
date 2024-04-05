@@ -4,6 +4,8 @@ import "flatpickr/dist/flatpickr.min.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import AppProvider from "./provider"
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RootLayout({
   children,
@@ -20,6 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <div className="dark:bg-dark dark:text-darkSlate">
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+          />
           <AppProvider>
             {/* {loading ? <Loader /> : children} */}
             {children}
