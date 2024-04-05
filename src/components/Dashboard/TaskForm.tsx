@@ -5,7 +5,7 @@ import DatePicker from '../common/FormElement/DatePicker'
 import { useForm } from 'react-hook-form';
 import Button from '../common/Button';
 import { useDispatch } from 'react-redux';
-import { addTask, updateTask } from '@/lib/task/taskSlice';
+import { addTask, clearSelectedTask, updateTask } from '@/lib/task/taskSlice';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup"
 import { Task } from '@/types/task';
@@ -53,7 +53,8 @@ const TaskForm = ({
           dueDate: new Date(data.dueDate),
         }),
       );
-      } else {
+      dispatch(clearSelectedTask()); 
+    } else {
       dispatch(
         addTask({
           id: Math.floor(Math.random() * 1000), // Generate random ID

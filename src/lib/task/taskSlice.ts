@@ -7,11 +7,13 @@ import { toast } from "react-toastify";
 interface TasksState {
   tasks: Task[];
   filter: string;
+  selectedTask: Task | null;
 }
 
 const initialState: TasksState = {
   tasks: [],
   filter: 'all',
+  selectedTask: null,
 };
 
 const TaskSlice = createSlice({
@@ -25,10 +27,14 @@ const TaskSlice = createSlice({
     toggleTaskCompletion: (state, action) => {
       const taskId = action.payload;
       const task = state.tasks.find((task) => task.id === taskId)
-      if(task) {
-        task.completed = !task.completed
+      if (task) {
+        task.completed = !task.completed;
+        if (task.completed) {
+          toast.success("Task completed successfully!");
+        } else {
+          toast.success("Task is active!");
+        }
       }
-      toast.success("Task completed successfully!");
     },
     deleteTask: (state, action) => {
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
@@ -50,9 +56,12 @@ const TaskSlice = createSlice({
     setFilter: (state, action: PayloadAction<string>) => {
       state.filter = action.payload;
     },
+    clearSelectedTask: state => {
+      state.selectedTask = null;
+    }
   },
 });
 
-export const { addTask, toggleTaskCompletion, deleteTask, updateTask, setFilter } =
+export const { addTask, toggleTaskCompletion, deleteTask, updateTask, setFilter, clearSelectedTask } =
   TaskSlice.actions;
 export default TaskSlice.reducer;
