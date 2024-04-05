@@ -15,6 +15,7 @@ export default function Home() {
 
   // close modal
   const closeModal = () => {
+    setEditTask(null)
     setIsModalOpen(false);
   };
 

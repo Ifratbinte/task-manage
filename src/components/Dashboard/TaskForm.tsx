@@ -36,7 +36,8 @@ const TaskForm = ({
     formState: { errors },
     getValues,
     setValue,
-  } = useForm<TaskFormData>({mode: "all" , resolver: yupResolver<any>(schema)});
+    reset
+  } = useForm<TaskFormData>({mode: "all", defaultValues : {} , resolver: yupResolver<any>(schema)});
   const dispatch = useDispatch();
 
   console.log("get values", getValues());
@@ -53,6 +54,7 @@ const TaskForm = ({
           dueDate: new Date(data.dueDate),
         }),
       );
+      reset({});
       dispatch(clearSelectedTask()); 
     } else {
       dispatch(
@@ -64,11 +66,15 @@ const TaskForm = ({
         }),
       );
     }
+    reset({});
     handleClose();
   };
 
   useEffect(() => {
-    if (!editData?.id) return;
+    if (!editData?.id) {
+      reset({});
+      return
+    };
     setValue("title", editData.title);
     editData.dueDate &&
       setValue("dueDate", new Date(editData.dueDate)?.toDateString());
