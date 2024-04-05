@@ -33,8 +33,8 @@ const TasksList: React.FC<Props> = ({ addTaskHandler, handleEdit}) => {
   console.log("tasks", tasks);
   
   // task completion handler
-  const handleToggleCompletion = (taskId:number) => {
-    dispatch(toggleTaskCompletion(taskId));
+  const handleToggleCompletion = (id:number) => {
+    dispatch(toggleTaskCompletion(id));
   };
 
   // task delete handler
@@ -69,35 +69,38 @@ const TasksList: React.FC<Props> = ({ addTaskHandler, handleEdit}) => {
             </tr>
           </thead>
           
-            {tasks.length === 0 ? (
-                <p className='py-5 text-base'>No Data found</p>
-            ) : (
+          <tbody className='bg-white dark:bg-slate-800'>
+              {tasks.length === 0 ? 
+              <tr>
+                <td colSpan={4} className='text-center py-4 text-base'>No Data Found</td>
+              </tr> 
+              : 
               <>
-                <tbody className='bg-white dark:bg-slate-800'>
-                  {tasks.map((task:any) => (
-                    <tr key={task.title} className='border-b border-slate-100 cursor-pointer dark:border-slate-700 text-slate-500 dark:text-slate-400 text-base' >
-                      
-                      <td className="pl-8 py-3 flex items-center gap-3">
-                        <input
-                          type="checkbox"
-                          checked={task.completed}
-                          onChange={() => handleToggleCompletion(task.id)}
-                        />
-                        <span className={`${task.completed ? "line-through" : ""} font-semibold`} onClick={() => handleEdit(task)}>{task.title}</span>
-                      </td>
-                      <td className='px-8 py-3' onClick={() => handleEdit(task)}>{task.description}</td>
-                      {/* <td className="pr-8 py-3">{task.status}</td> */}
-                      <td className="pr-8 py-3" onClick={() => handleEdit(task)}>{new Date(task?.dueDate).toDateString()}</td>
-                      <td className='pr-8 text-center'>
-                        <button onClick={()=> handleDelete(task.id)} className="text-red-400 hover:text-red-600">
-                          <FaTrashAlt/>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                {tasks.map((task:any) => (
+                  <tr key={task.title} className='border-b border-slate-100 cursor-pointer dark:border-slate-700 text-slate-500 dark:text-slate-400 text-base' >
+                    
+                    <td className="pl-8 py-3 flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={task.completed}
+                        onChange={() => handleToggleCompletion(task.id)}
+                      />
+                      <span className={`${task.completed ? "line-through" : ""} font-semibold`} onClick={() => handleEdit(task)}>{task.title}</span>
+                    </td>
+                    <td className='px-8 py-3' onClick={() => handleEdit(task)}>{task.description}</td>
+                    {/* <td className="pr-8 py-3">{task.status}</td> */}
+                    <td className="pr-8 py-3" onClick={() => handleEdit(task)}>{new Date(task?.dueDate).toDateString()}</td>
+                    <td className='pr-8 text-center'>
+                      <button onClick={()=> handleDelete(task.id)} className="text-red-400 hover:text-red-600">
+                        <FaTrashAlt/>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </>
-            )}
+              }
+              
+            </tbody>
         </table>
       </div>
     </div>
