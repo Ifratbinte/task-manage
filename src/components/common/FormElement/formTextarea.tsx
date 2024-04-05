@@ -18,7 +18,7 @@ const FormTextarea:React.FC<FormTextareaProps> = ({label,row,placeholder, regist
         <textarea
             rows={row}
             placeholder={placeholder}
-            className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            className="w-full rounded border-[1.5px] border-stroke dark:border-slate-700 bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             {...register(name, { required:true })}
             >
         </textarea>

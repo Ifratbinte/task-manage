@@ -29,7 +29,7 @@ const DatePicker:React.FC<DatePickerProps> = ({label, register, name}) => {
         {label}
         <span className='text-red-500'>*</span>
       </label>
-      <div className="relative w-full border-[1.5px] border-stroke">
+      <div className="relative w-full border-[1.5px] border-stroke dark:border-slate-700">
         <input
           className="form-datepicker rounded  bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
           placeholder="mm/dd/yyyy"
