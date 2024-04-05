@@ -14,15 +14,27 @@ interface Props {
 }
 
 const TasksList: React.FC<Props> = ({ addTaskHandler, handleEdit}) => {
+
+  const selectFilteredTasks = (state: RootState) => {
+    const { tasks, filter } = state.task;
+    if (filter === 'completed') {
+      return tasks.filter((task) => task.completed);
+    } else if (filter === 'active') {
+      return tasks.filter((task) => !task.completed);
+    } else if (filter === 'all') {
+      return tasks;
+    } 
+    return tasks; // For "all" filter
+  };
  
   const dispatch = useDispatch();
-  const {tasks}  = useSelector((state: RootState) => state.task);
+  const tasks = useSelector(selectFilteredTasks);
 
   console.log("tasks", tasks);
   
   // task completion handler
-  const handleToggleCompletion = (id:number) => {
-    dispatch(toggleTaskCompletion(id));
+  const handleToggleCompletion = (taskId:number) => {
+    dispatch(toggleTaskCompletion(taskId));
   };
 
   // task delete handler

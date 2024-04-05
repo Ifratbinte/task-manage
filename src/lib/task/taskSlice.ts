@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 
 interface TasksState {
   tasks: Task[];
+  filter: string;
 }
 
 const initialState: TasksState = {
   tasks: [],
+  filter: 'all',
 };
 
 const TaskSlice = createSlice({
@@ -43,9 +45,12 @@ const TaskSlice = createSlice({
         state.tasks[idx].dueDate = action.payload.dueDate;
       }
     },
+    setFilter: (state, action: PayloadAction<string>) => {
+      state.filter = action.payload;
+    },
   },
 });
 
-export const { addTask, toggleTaskCompletion, deleteTask, updateTask } =
+export const { addTask, toggleTaskCompletion, deleteTask, updateTask, setFilter } =
   TaskSlice.actions;
 export default TaskSlice.reducer;
